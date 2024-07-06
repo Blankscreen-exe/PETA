@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+        html {
+          --s: 47px; /* control the size*/
+          --c1: #ffffff;
+          --c2: #f0f0f0;
+          --c3: #ebebeb;
+
+          --_g: 0 120deg,#0000 0;
+          background:
+            conic-gradient(from    0deg at calc(500%/6) calc(100%/3),var(--c3) var(--_g)),
+            conic-gradient(from -120deg at calc(100%/6) calc(100%/3),var(--c2) var(--_g)),
+            conic-gradient(from  120deg at calc(100%/3) calc(500%/6),var(--c1) var(--_g)),
+            conic-gradient(from  120deg at calc(200%/3) calc(500%/6),var(--c1) var(--_g)),
+            conic-gradient(from -180deg at calc(100%/3) 50%,var(--c2)  60deg,var(--c1) var(--_g)),
+            conic-gradient(from   60deg at calc(200%/3) 50%,var(--c1)  60deg,var(--c3) var(--_g)),
+            conic-gradient(from  -60deg at 50% calc(100%/3),var(--c1) 120deg,var(--c2) 0 240deg,var(--c3) 0);
+          background-size: calc(var(--s)*1.732) var(--s);
+        }
+      </style>
+
+    <link rel="stylesheet" href="index.css" />
+    <title>PETA Note</title>
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+  </head>
+  <body>
+    <div class="relative flex min-h-screen flex-col justify-center overflow-hidden py-6 sm:py-12">
+      <div class="mx-auto w-[90%]">
+        <div class="mb-4 rounded-md bg-white p-5 shadow-xl ring-1 ring-gray-900/5">
+          <h1 class="mb-4 font-sans text-2xl font-bold text-gray-500">Personal Expendable Text Area (P.E.T.A)</h1>
+          <p class="font-sans text-gray-700">It is like a expendable notepad. You can write anything here and it will be kept inside your local storage.</p>
+        </div>
+        <div class="relative mx-auto h-72 bg-white px-6 pb-8 pt-10 shadow-xl ring-1 ring-gray-900/5 sm:rounded-lg sm:px-10">
+          <div class="mx-auto w-full">
+            <textarea id="PETA" class="h-56 w-full resize-none focus:outline-none" placeholder="Type something here ..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+
+      const storedContent = localStorage.getItem('PETA_content_exclusive_deluxe');
+      if (storedContent) {
+        document.getElementById('PETA').value = storedContent;
+      }
+      document.getElementById('PETA').addEventListener('keypress', () => {
+        const content = document.getElementById('PETA').value;
+        console.log(content)
+        localStorage.setItem('PETA_content_exclusive_deluxe', content);
+      });
+    </script>
+  </body>
+</html>
