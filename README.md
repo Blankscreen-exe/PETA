@@ -4,7 +4,7 @@ This is like a notepad app but on browser and expendable, which stores data on l
 
 > 📌 You can checkout the deployed version [here](https://blankscreen-exe.github.io/Personal-Expendable-Text-Area/)
 
-### Things I used to make This
+### Things I used to make it
 
 - The usual `HTML` and `CSS`
 - Some `Tailwind` for styling
