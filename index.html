@@ -141,9 +141,9 @@
         // Set editor max height
         $('.ql-editor').css('max-height', editorMaxHeight);
 
-        document.addEventListener('keydown', (event) => {
+        $(document).keydown( (event) => {
           if (event.ctrlKey && event.key === 's') {
-            event.preventDefault() // disables the default save popup
+            event.preventDefault(); // disables the default save popup
             saveContent();
           }
         });
