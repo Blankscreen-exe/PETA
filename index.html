@@ -19,11 +19,28 @@
             conic-gradient(from  -60deg at 50% calc(100%/3),var(--c1) 120deg,var(--c2) 0 240deg,var(--c3) 0);
           background-size: calc(var(--s)*1.732) var(--s);
         }
-      </style>
+    </style>
 
-    <link rel="stylesheet" href="index.css" />
     <title>PETA Note</title>
+
     <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+    <link rel="stylesheet" href="index.css" />
+
+    <!-- Jquery support -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <!-- Include quill.js stylesheet REF https://quilljs.com -->
+    <!-- WARN: these imports have a distinct order, rearranging which can cause Quill to not work properly -->
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+
   </head>
   <body>
     <div class="relative flex min-h-screen flex-col justify-center overflow-hidden py-6 sm:py-12">
@@ -32,25 +49,95 @@
           <h1 class="mb-4 font-sans text-2xl font-bold text-gray-500">Personal Expendable Text Area (P.E.T.A)</h1>
           <p class="font-sans text-gray-700">It is like a expendable notepad. You can write anything here and it will be kept inside your local storage.</p>
         </div>
-        <div class="relative mx-auto h-72 bg-white px-6 pb-8 pt-10 shadow-xl ring-1 ring-gray-900/5 sm:rounded-lg sm:px-10">
+        <div class="relative mx-auto h-[50%] bg-white px-6 pb-8 pt-10 shadow-xl ring-1 ring-gray-900/5 sm:rounded-lg sm:px-10">
           <div class="mx-auto w-full">
-            <textarea id="PETA" class="h-56 w-full resize-none focus:outline-none" placeholder="Type something here ..."></textarea>
+
+             <div id="toolbar-container" class="!border-none bg-slate-100 rounded-md" >
+              <span class="ql-formats">
+                <select class="ql-font"></select>
+                <select class="ql-size"></select>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-bold"></button>
+                <button class="ql-italic"></button>
+                <button class="ql-underline"></button>
+                <button class="ql-strike"></button>
+              </span>
+              <span class="ql-formats">
+                <select class="ql-color"></select>
+                <select class="ql-background"></select>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-script" value="sub"></button>
+                <button class="ql-script" value="super"></button>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-header" value="1"></button>
+                <button class="ql-header" value="2"></button>
+                <button class="ql-blockquote"></button>
+                <button class="ql-code-block"></button>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-list" value="ordered"></button>
+                <button class="ql-list" value="bullet"></button>
+                <button class="ql-indent" value="-1"></button>
+                <button class="ql-indent" value="+1"></button>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-direction" value="rtl"></button>
+                <select class="ql-align"></select>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-link"></button>
+                <button class="ql-image"></button>
+                <button class="ql-video"></button>
+                <button class="ql-formula"></button>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-clean"></button>
+              </span>
+            </div>
+
+            <!-- Create the editor container -->
+            <div id="editor" class="h-32 !h-max-[450px] w-full resize-none focus:outline-none !border-none" >
+              
+            </div>
+
+
           </div>
         </div>
       </div>
     </div>
 
-    <script>
+    <script defer>
+      $(document).ready(function() {
+        const storageNameID = 'PETA_content_exclusive_deluxe';
+        const editorMaxHeight = "450px";
+        const storedContent = localStorage.getItem(storageNameID);
 
-      const storedContent = localStorage.getItem('PETA_content_exclusive_deluxe');
-      if (storedContent) {
-        document.getElementById('PETA').value = storedContent;
-      }
-      document.getElementById('PETA').addEventListener('keypress', () => {
-        const content = document.getElementById('PETA').value;
-        console.log(content)
-        localStorage.setItem('PETA_content_exclusive_deluxe', content);
+        if (storedContent) {
+          $('#editor').html(storedContent);
+        }
+
+        $('#editor').on('keypress', function() {
+          const content = $(this).html();
+          localStorage.setItem(storageNameID, content);
+          console.log("Content Saved!");
+        });
+
+        const quill = new Quill('#editor', {
+          modules: {
+            syntax: true,
+            toolbar: '#toolbar-container',
+          },
+          placeholder: 'Write your shenanigans here ...',
+          theme: 'snow',
+        });
+        
+        // Set editor max height
+        $('.ql-editor').css('max-height', editorMaxHeight);
       });
     </script>
   </body>
 </html>
+
