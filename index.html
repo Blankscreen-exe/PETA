@@ -119,10 +119,14 @@
           $('#editor').html(storedContent);
         }
 
-        $('#editor').on('keypress', function() {
-          const content = $(this).html();
+        function saveContent() {
+          const content = $('#editor').html();
           localStorage.setItem(storageNameID, content);
           console.log("Content Saved!");
+        }
+
+        $('#editor').on('change', function() {
+          saveContent();
         });
 
         const quill = new Quill('#editor', {
@@ -136,6 +140,13 @@
         
         // Set editor max height
         $('.ql-editor').css('max-height', editorMaxHeight);
+
+        document.addEventListener('keydown', (event) => {
+          if (event.ctrlKey && event.key === 's') {
+            event.preventDefault() // disables the default save popup
+            saveContent();
+          }
+        });
       });
     </script>
   </body>
