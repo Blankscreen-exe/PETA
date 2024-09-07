@@ -9,3 +9,10 @@ This is like a notepad app but on browser and expendable, which stores data on l
 - The usual `HTML` and `CSS`
 - Some `Tailwind` for styling
 - `JavaScript` for storing stuff in local storage
+
+## Contribution Guidelines
+
+- Always generate a PR ofr the `dev` branch. PRs generated on `main` branch will be rejected.
+- The PR message should be descriptive and should state clearly what is implemented. Details are appreciated.
+- Your commit messages should follow the convention as mentioned [here](https://www.conventionalcommits.org/en/v1.0.0/).
+- That is about it and have fun coding.
