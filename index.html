@@ -49,6 +49,12 @@
           <h1 class="mb-4 font-sans text-2xl font-bold text-gray-500">Personal Expendable Text Area (P.E.T.A)</h1>
           <p class="font-sans text-gray-700">It is like a expendable notepad. You can write anything here and it will be kept inside your local storage.</p>
         </div>
+
+        <div id="saveMsg" class="mb-4 rounded-md bg-cyan-100 p-5 shadow-xl ring-1 ring-gray-900/5 flex flex-row gap-2">
+          <span class="bg-cyan-500 border-8 border-cyan-200/60 inline-flex my-auto p-1 !h-0 !w-0 rounded-full"></span>
+          <p class="font-sans font-semibold text-cyan-800">Your content gets saved with every keystroke! But you can still get the satisfaction of <code class="bg-slate-100 p-1 rounded-sm text-gray-600">Ctrl+s</code></p>
+        </div>
+
         <div class="relative mx-auto h-[50%] bg-white px-6 pb-8 pt-10 shadow-xl ring-1 ring-gray-900/5 sm:rounded-lg sm:px-10">
           <div class="mx-auto w-full">
 
@@ -115,6 +121,8 @@
         const editorMaxHeight = "450px";
         const storedContent = localStorage.getItem(storageNameID);
 
+        $('#saveMsg').hide();
+
         if (storedContent) {
           $('#editor').html(storedContent);
         }
@@ -123,6 +131,10 @@
           const content = $('#editor').html();
           localStorage.setItem(storageNameID, content);
           console.log("Content Saved!");
+        }
+
+        function showAndHide() {
+          $('#saveMsg').fadeIn(500).delay(3000).fadeOut(500);
         }
 
         $('#editor').keydown( function() {
@@ -145,8 +157,10 @@
           if (event.ctrlKey && event.key === 's') {
             event.preventDefault(); // disables the default save popup
             saveContent();
+            showAndHide();
           }
         });
+
       });
     </script>
   </body>
